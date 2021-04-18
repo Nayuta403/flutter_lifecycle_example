@@ -1,16 +1,10 @@
 # flutter_lifecycle_example
 
-A new Flutter project.
+测试 flutter 生命周期和自定义路由功能
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+首页包含两个入口，第一个打开跳转PageA，之后继续打开Page B、C、D、E、F 可以在控制台观察日志
 
-A few resources to get you started if this is your first Flutter project:
+第二个入口是自定义路由，可以通过点击右下角按钮进入下一个页面，左上角返回
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
