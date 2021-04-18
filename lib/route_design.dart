@@ -6,27 +6,20 @@ import 'package:flutter_lifecycle_example/pageA.dart';
 class RouteHost extends StatefulWidget {
   @override
   RouteHostState createState() => RouteHostState();
+
+  static RouteHostState of(BuildContext context) {
+    return context.findAncestorStateOfType<RouteHostState>();
+  }
 }
 
 class RouteHostState extends State<RouteHost> with TickerProviderStateMixin {
-  List<Widget> pages = []; //路由中的多个页面
-  @override
-  Widget build(BuildContext context) {
-    List<Widget> children = [];
-    pages.forEach((page) {
-      //每一个页面都占满了屏幕，所以只会显示最后一个页面
-      children.add(Positioned.fill(child: page));
-    });
-    return Stack(
-      children: children,
-    );
-  }
-
   List<AnimationController> controllers = [];
 
+  List<Widget> pages = []; //路由中的多个页面
   @override
   void initState() {
     super.initState();
+    //初始化路由
     pages.add(RoutePage());
     controllers.add(AnimationController(vsync: this));
   }
@@ -35,6 +28,14 @@ class RouteHostState extends State<RouteHost> with TickerProviderStateMixin {
   void dispose() {
     controllers.forEach((e) => e.dispose());
     super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      fit: StackFit.expand, //每个页面撑满屏幕
+      children: pages,
+    );
   }
 
   void open(Widget page) {
@@ -69,10 +70,6 @@ class RouteHostState extends State<RouteHost> with TickerProviderStateMixin {
       Navigator.of(context).pop();
     }
   }
-
-  static RouteHostState of(BuildContext context) {
-    return context.findAncestorStateOfType<RouteHostState>();
-  }
 }
 
 class RoutePage extends StatefulWidget {
@@ -94,7 +91,7 @@ class _RoutePageState extends State<RoutePage> {
   ];
 
   void openPage() {
-    RouteHostState.of(context).open(RoutePage());
+    RouteHost.of(context).open(RoutePage());
   }
 
   @override
@@ -104,7 +101,7 @@ class _RoutePageState extends State<RoutePage> {
         title: Text('测试的Route页面'),
         leading: BackButton(
           onPressed: () {
-            RouteHostState.of(context).close();
+            RouteHost.of(context).close();
           },
         ),
       ),
